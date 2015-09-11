@@ -1,4 +1,4 @@
 require './app'
-require './app/models/OppsModel'
+require './models/OppsModel'
 
 run Sinatra::Application

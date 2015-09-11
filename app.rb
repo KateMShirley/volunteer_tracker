@@ -7,10 +7,21 @@ ActiveRecord::Base.establish_connection(
 )
 
 get '/' do
-  File.read('app/index.html')
-end 
+  erb :index
+end
+
+get '/somejunkstufftestyolo' do
+
+  @allthemodels = OppsModel.where({ user_id: 1 })
+
+
+
+
+end
 
 ##RESTFUL api
+
+
 
 def opp_id
   opp_params = { :id => params[:id]}
