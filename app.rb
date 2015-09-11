@@ -10,6 +10,40 @@ get '/' do
   erb :index
 end
 
+
+##RESTFUL api
+
+def opp_id
+  opp_params = { :id => params[:id]}
+end
+
+def opp_object
+  opp_params = {
+    :user_id => params[:user_id],
+    :title => params[:title],
+    :org => params[:org],
+    :hours => params[:hours],
+    :description => params[:description],
+    :location => params[:location],
+    :category => params[:category],
+    :completed => params[:completed]
+  }
+end
+
+def opp_object_update
+  opp_params = {
+    :user_id => params[:user_id],
+    :id => params[:id],
+    :title => params[:title],
+    :org => params[:org],
+    :hours => params[:hours],
+    :description => params[:description],
+    :location => params[:location],
+    :category => params[:category],
+    :completed => params[:completed]
+  }
+end
+
 get '/api/opportunities' do
   OppsModel.all.to_json
 end
@@ -19,36 +53,49 @@ get '/api/opportunities/:id' do
 end
 
 post '/api/opportunities' do
-  request_body = JSON.parse(request.body.read.to_s)
-  OppsModel.create(request_body).to_json
+  OppsModel.create(opp_object).to_json
+  # body = JSON.parse(request.body.read.to_s)
+  # opp = OppsModel.create(
+  # title: body['title'],
+  # org: body['org'],
+  # hours: body['hours'],
+  # description: body['description'],
+  # location: body['location'],
+  # category: body['category'],
+  # completed: body['completed']
+  # )
+  # opp.to_json
+
 end
 
 put '/api/opportunities/:id' do
-  request_body = JSON.parse(request.body.read.to_s)
-  @id = params[:id]
-  @opps = OppsModel.find(@id)
-  @opps.title = request_body[:title]
-  @opps.org = request_body[:org]
-  @opps.hours = request_body[:hours]
-  @opps.description = request_body[:description]
-  @opps.location = request_body[:location]
-  @opps.category = request_body[:category]
-  @opps.completed = request_body[:completed]
+  @opp = OppsModel.find(opp_object_update[:id])
+  @opp.user_id = opp_object_update[:user_id]
+  @opp.title = opp_object_update[:title]
+  @opp.org = opp_object_update[:org]
+  @opp.hours = opp_object_update[:hours]
+  @opp.description = opp_object_update[:description]
+  @opp.location = opp_object_update[:location]
+  @opp.category = opp_object_update[:category]
+  @opp.completed = opp_object_update[:completed]
+  @opp.save
+  @opp.to_json
 end
 
 patch '/api/opportunities/:id' do
-  request_body = JSON.parse(request.body.read.to_s)
-  @id = params[:id]
-  @opps = OppsModel.find(@id)
-  @opps.title = request_body[:title]
-  @opps.org = request_body[:org]
-  @opps.hours = request_body[:hours]
-  @opps.description = request_body[:description]
-  @opps.location = request_body[:location]
-  @opps.category = request_body[:category]
-  @opps.completed = request_body[:completed]
+  @opp = OppsModel.find(opp_object_update[:id])
+  @opp.user_id = opp_object_update[:user_id]
+  @opp.title = opp_object_update[:title]
+  @opp.org = opp_object_update[:org]
+  @opp.hours = opp_object_update[:hours]
+  @opp.description = opp_object_update[:description]
+  @opp.location = opp_object_update[:location]
+  @opp.category = opp_object_update[:category]
+  @opp.completed = opp_object_update[:completed]
+  @opp.save
+  @opp.to_json
 end
 
 delete '/api/opportunities/:id' do
-  InstagramModel.destroy(params[:id]).to_json
+  OppsModel.destroy(params[:id]).to_json
 end
