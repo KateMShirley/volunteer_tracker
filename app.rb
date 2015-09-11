@@ -7,9 +7,8 @@ ActiveRecord::Base.establish_connection(
 )
 
 get '/' do
-  erb :index
-end
-
+  File.read('app/index.html')
+end 
 
 ##RESTFUL api
 
