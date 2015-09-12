@@ -7,17 +7,116 @@ ActiveRecord::Base.establish_connection(
 )
 
 get '/' do
-  erb :index
+  erb :login
 end
+
+get '/register' do
+  erb :register
+end
+
 
 get '/somejunkstufftestyolo' do
 
   @allthemodels = OppsModel.where({ user_id: 1 })
 
+  @total_hours = 0;
+
+  @allthemodels.each do |model|
+    @total_hours = model.hours + @total_hours
+  end
+
+  #<%= @total_hours %>
 
 
 
 end
+
+#################user authenication#####################
+
+##enable server side sessions
+enable :sessions
+
+##does a user exist?
+def does_user_exist?(username)
+  user = UsersModel.find_by(:username => username.to_s)
+  if user
+    return true
+  else
+    return false
+  end
+end
+
+##is a user logged in?
+def is_not_authenticated?
+  session[:user].nil?
+end
+
+##registration action
+post '/register' do
+  @message = ''
+
+  if does_user_exist?(params[:username]) == true
+    @message = 'Sorry, this username already exists. Please try a new one.'
+    return erb :login_notice
+  end
+
+  password_salt = BCrypt::Engine.generate_salt
+  password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
+
+
+  new_user = UsersModel.new
+  new_user.first_name = params[:first_name]
+  new_user.last_name = params[:last_name]
+  new_user.username = params[:username]
+  new_user.email = params[:email]
+  new_user.password_hash = password_hash
+  new_user.password_salt = password_salt
+  new_user.save
+
+  @message = 'You have successfully registered! Please login with your new username and password. '
+  return erb :login_notice
+
+  end
+
+## login action
+post '/' do
+
+  @message = ''
+  if does_user_exist?(params[:username]) == false
+    @message = 'Sorry, but that username or password does not exist. Please try logging in again.'
+    return erb :login_notice
+  end
+
+  user = UsersModel.where(:username => params[:username]).first!
+
+  pwd = params[:password]
+  if user.password_hash == BCrypt::Engine.hash_secret(pwd, user.password_salt)
+    @message = 'You have been logged in successfully'
+    session[:user] = user
+    return erb :login_notice
+  else
+    @message = 'Password is incorrect. Please try again'
+    return erb :login_notice
+  end
+end
+
+  get '/logout' do
+    session[:user] = nil
+    redirect '/'
+  end
+
+  get '/dashboard' do
+    if is_not_authenticated? == true
+      return erb :dashboard
+    else
+      @message = 'Please login'
+      return erb :login_notice
+    end
+  end
+
+
+
+
 
 ##RESTFUL api
 
