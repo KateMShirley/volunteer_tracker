@@ -1,33 +1,50 @@
-angular.module('volunteerTrack.controllers', []).controller('volunteerTrackController', function($scope, $state, popupService, $window, Opp) {
-  $scope.opps = Opp.query(); //fetch all movies. Issues a GET to /api/movies
+var app = angular.module('volunteerTrack.controllers', []);
 
-  $scope.deleteMovie = function(movie) { // Delete a movie. Issues a DELETE to /api/movies/:id
-    if (popupService.showPopup('Really delete this?')) {
-      movie.$delete(function() {
-        $window.location.href = ''; //redirect to home
-      });
-    }
-  };
-}).controller('MovieViewController', function($scope, $stateParams, Movie) {
-  $scope.movie = Movie.get({ id: $stateParams.id }); //Get a single movie.Issues a GET to /api/movies/:id
-}).controller('MovieCreateController', function($scope, $state, $stateParams, Movie) {
-  $scope.movie = new Movie();  //create new movie instance. Properties will be set via ng-model on UI
+app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
+    function ($scope, OppsFactory, OppFactory, $location) {
+        console.log('ANGULAR IN DA HOUSE');
+        // callback for ng-click 'editOpp':
+        $scope.editOpp = function (oppId) {
+            $location.path('/opp_edit/' + oppId);
+        };
 
-  $scope.addMovie = function() { //create a new movie. Issues a POST to /api/movies
-    $scope.movie.$save(function() {
-      $state.go('movies'); // on success go back to home i.e. movies state.
-    });
-  };
-}).controller('MovieEditController', function($scope, $state, $stateParams, Movie) {
-  $scope.updateMovie = function() { //Update the edited movie. Issues a PUT to /api/movies/:id
-    $scope.movie.$update(function() {
-      $state.go('movies'); // on success go back to home i.e. movies state.
-    });
-  };
+        // callback for ng-click 'deleteOpp':
+        $scope.deleteOpp = function (oppId) {
+            OppFactory.delete({ id: oppId });
+            $scope.opps = OppsFactory.query();
+        };
 
-  $scope.loadMovie = function() { //Issues a GET request to /api/movies/:id to get a movie to update
-    $scope.movie = Movie.get({ id: $stateParams.id });
-  };
+        // callback for ng-click 'createOpp':
+        $scope.createNewOpp = function () {
+            $location.path('/opp_new');
+        };
 
-  $scope.loadMovie(); // Load a movie which can be edited on UI
-});
+        $scope.opps = OppsFactory.query();
+    }]);
+    /* ... */
+    app.controller('OppsEditCtrl', ['$scope', '$routeParams', 'OppFactory', '$location',
+        function ($scope, $routeParams, OppFactory, $location) {
+
+            // callback for ng-click 'updateOpp':
+            $scope.updateOpp = function () {
+                OppFactory.update($scope.opp);
+                $location.path('/opps_list');
+            };
+
+            // callback for ng-click 'cancel':
+            $scope.cancel = function () {
+                $location.path('/opps_list');
+            };
+
+            $scope.opp = OppFactory.show({id: $routeParams.id});
+        }]);
+
+    app.controller('OppsNewCtrl', ['$scope', 'OppsFactory', '$location',
+        function ($scope, OppsFactory, $location) {
+
+            // callback for ng-click 'createNewUser':
+            $scope.createNewOpp = function () {
+                OppsFactory.create($scope.opp);
+                $location.path('/opps_list');
+            }
+        }]);
