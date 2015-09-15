@@ -1,7 +1,7 @@
 var app = angular.module('volunteerTrack.controllers', []);
 
-app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
-    function ($scope, OppsFactory, OppFactory, $location) {
+app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppsFactory', '$location',
+    function ($scope, OppsFactory, OppsFactory, $location) {
         console.log('ANGULAR IN DA HOUSE');
 
         $scope.fetch = function() {
@@ -19,8 +19,9 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
 
         // callback for ng-click 'deleteOpp':
         $scope.deleteOpp = function (oppId) {
-            OppFactory.delete({ id: oppId });
-            $scope.opps = OppsFactory.query();
+            OppsFactory.delete({ id: oppId });
+            //$scope.opps = OppsFactory.query();
+            $scope.fetch();
         };
 
         // callback for ng-click 'createOpp':
@@ -39,12 +40,12 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
         console.log($scope.opps)
     }]);
     /* ... */
-    app.controller('OppsEditCtrl', ['$scope', '$routeParams', 'OppFactory', '$location',
-        function ($scope, $routeParams, OppFactory, $location) {
+    app.controller('OppsEditCtrl', ['$scope', '$routeParams', 'OppsFactory', '$location',
+        function ($scope, $routeParams, OppsFactory, $location) {
 
             // callback for ng-click 'updateOpp':
             $scope.updateOpp = function () {
-                OppFactory.update($scope.opp);
+                OppsFactory.update($scope.opp);
                 $location.path('/opps_list');
             };
 
@@ -53,7 +54,7 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
                 $location.path('/opps_list');
             };
 
-            $scope.opp = OppFactory.show({id: $routeParams.id});
+            $scope.opp = OppsFactory.show({id: $routeParams.id});
         }]);
 
     // app.controller('OppsNewCtrl', ['$scope', 'OppsFactory', '$location',
