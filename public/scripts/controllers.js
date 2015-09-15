@@ -3,6 +3,15 @@ var app = angular.module('volunteerTrack.controllers', []);
 app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
     function ($scope, OppsFactory, OppFactory, $location) {
         console.log('ANGULAR IN DA HOUSE');
+
+        $scope.fetch = function() {
+
+          setTimeout(function() {
+            $scope.opps = OppsFactory.query();
+          }, 1000);
+
+        };
+
         // callback for ng-click 'editOpp':
         $scope.editOpp = function (oppId) {
             $location.path('/opp_edit/' + oppId);
@@ -19,10 +28,9 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
             // OppsFactory.create($scope.opp);
             // console.log('opp created');
             // console.log ($scope.opp);
-
+            $scope.opp['user_id'] = user.id;
             OppsFactory.save($scope.opp);
-            
-            $scope.opps = OppsFactory.query();
+            $scope.fetch();
         }
 
         $scope.opps = OppsFactory.query();
