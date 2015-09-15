@@ -8,7 +8,7 @@ services.factory('OppsFactory', function($resource){
   })
 });
 
-//FOR CRUD FUNCTIONALITY THAT DOES NOT REQUIRE ID
+//FOR CRUD FUNCTIONALITY THAt REQUIRE ID
 services.factory('OppFactory', function($resource){
   return $resource('/api/opportunities/:id', {}, {
     show: { method: 'GET' },

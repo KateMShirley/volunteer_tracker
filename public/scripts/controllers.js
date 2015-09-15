@@ -20,6 +20,9 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
         };
 
         $scope.opps = OppsFactory.query();
+        $scope.currentUser = user.id;
+        console.log($scope.currentUser)
+        console.log($scope.opps)
     }]);
     /* ... */
     app.controller('OppsEditCtrl', ['$scope', '$routeParams', 'OppFactory', '$location',
