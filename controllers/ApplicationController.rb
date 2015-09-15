@@ -112,12 +112,15 @@ get '/api/opportunities/:id' do
 end
 
 post '/api/opportunities' do
-  OppsModel.create(opp_object).to_json
+  @request_body = JSON.parse(request.body.read.to_s) #{"title"=>"asdasd", "org"=>"asdasdasdsa", "hours"=>32, "category"=>"Women"}
+  OppsModel.create(@request_body).to_json
 
 end
 
 put '/api/opportunities/:id' do
   @opp = OppsModel.find(opp_object_update[:id])
+  #@request_body = JSON.parse(request.body.read.to_s) #{"title"=>"asdasd", "org"=>"asdasdasdsa", "hours"=>32, "category"=>"Women"}
+  #OppsModel.update(@request_body)
   @opp.user_id = opp_object_update[:user_id]
   @opp.title = opp_object_update[:title]
   @opp.org = opp_object_update[:org]

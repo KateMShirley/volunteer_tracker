@@ -3,10 +3,16 @@
   user.id = <%= @current_user[:id] %>;
 </script>
 
-<h1>THIS IS PRIVATE UNLESS YOU ARE LOGGED IN!</h1>
+<h1>Do Good Dashboard</h1>
+
+<h3> Hello <%= @current_user[:first_name] %></h3>
+
 <div ng-app='volunteerTrack'>
   <div ng-controller ='OppsCtrl'>
   <div class="span6">
+
+  <!-- READ TABLE -->
+
       <table class="table table-striped table-condensed">
           <thead>
           <tr>
@@ -20,7 +26,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="opp in opps">
+          <tr ng-repeat="opp in opps | filter:{user_id:currentUser}:true">
               <td>{{ opp.title }}</td>
               <td>{{ opp.org }}</td>
               <td>{{ opp.category }}</td>
@@ -31,6 +37,65 @@
           </tr>
           </tbody>
       </table>
+
+
+<!--END TABLE -->
+
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#newForm" aria-expanded="false" aria-controls="collapseExample">
+        Add New
+      </button>
+
+      <br> <br>
+      <div class="collapse" id="newForm">
+        <div class="well">
+              <form class="form-group">
+                  <div class="control-group">
+                      <label class="control-label" for="inputTitle">Title of Opportunity:</label>
+                      <div class="controls">
+                          <input type="text" id="inputTitle" ng-model="opp.title" class='form-control'/>
+                      </div>
+                  </div>
+                  <div class="control-group">
+                      <label class="control-label" for="inputOrg">Organization:</label>
+                      <div class="controls">
+                          <input type="text" id="inputOrg" ng-model="opp.org" class='form-control'/>
+                      </div>
+                  </div>
+                  <div class="control-group">
+                      <label class="control-label" for="inputHours">Hours:</label>
+                      <div class="controls">
+                          <input type="number" id="inputOrg" ng-model="opp.hours" class='form-control'/>
+                      </div>
+                  </div>
+                  <div class="control-group">
+                      <label class="control-label" for="inputCategory">Category:</label>
+                      <div class="controls">
+                        <select class="form-control" ng-model="opp.category" class='form-control'>
+                              <option>Education</option>
+                              <option>Youth</option>
+                              <option>Community Development</option>
+                              <option>Poverty and Hunger</option>
+                              <option>Women</option>
+                              <option>Human Services</option>
+                              <option>Housing and Homeless</option>
+                              <option>Animals</option>
+                              <option>Veterans</option>
+                              </select>
+                      </div>
+                  </div>
+                  <div class="control-group">
+                      <div class="controls">
+                        <!-- user-detail.html: -->
+                          <a ng-click="cancel()" class="btn btn-small">cancel</a>
+
+                        <!-- user-creation.html: -->
+                          <a ng-click="createNewOpp()" class="btn btn-success">Add to List</a>
+                      </div>
+                  </div>
+              </form>
+          </div>
+        </div>
+        </div>
       <a ng-click="createNewOpp()" class="btn btn-small">Add a New Opportunity</a>
   </div>
 </div>

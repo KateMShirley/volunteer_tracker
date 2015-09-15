@@ -15,9 +15,15 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
         };
 
         // callback for ng-click 'createOpp':
-        $scope.createNewOpp = function () {
-            $location.path('/opp_new');
-        };
+        $scope.createNewOpp = function (opp) {
+            // OppsFactory.create($scope.opp);
+            // console.log('opp created');
+            // console.log ($scope.opp);
+
+            OppsFactory.save($scope.opp);
+            
+            $scope.opps = OppsFactory.query();
+        }
 
         $scope.opps = OppsFactory.query();
         $scope.currentUser = user.id;
@@ -42,12 +48,12 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppFactory', '$location',
             $scope.opp = OppFactory.show({id: $routeParams.id});
         }]);
 
-    app.controller('OppsNewCtrl', ['$scope', 'OppsFactory', '$location',
-        function ($scope, OppsFactory, $location) {
-
-            // callback for ng-click 'createNewUser':
-            $scope.createNewOpp = function () {
-                OppsFactory.create($scope.opp);
-                $location.path('/opps_list');
-            }
-        }]);
+    // app.controller('OppsNewCtrl', ['$scope', 'OppsFactory', '$location',
+    //     function ($scope, OppsFactory, $location) {
+    //
+    //         // callback for ng-click 'createNewUser':
+    //         $scope.createNewOpp = function () {
+    //             OppsFactory.create($scope.opp);
+    //
+    //         }
+    //     }]);
