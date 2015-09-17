@@ -63,9 +63,9 @@ class UsersController < ApplicationController
 
     pwd = params[:password]
     if @user.password_hash == BCrypt::Engine.hash_secret(pwd, @user.password_salt)
-      @message = 'You have been logged in successfully'
+      @message = 'Welcome Back! '
       session[:user] = @user
-      return erb :login_notice
+      redirect '/users/dashboard'
     else
       @message = 'Password is incorrect. Please try again'
       return erb :login_notice

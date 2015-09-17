@@ -11,6 +11,10 @@
 }
 
 .vertical-align {
+  margin-top:5%;
+}
+
+.vertical-alignbig {
   margin-top: 10%;
 }
 
@@ -30,11 +34,34 @@
   text-align: center;
 }
 
-#logbut {
+.logbut {
   display: block;
   margin: 0 auto;
 }
 
-#reglink {
+.reglink {
   text-align: right;
+}
+
+#admin{
+  padding:1%;
+}
+
+#authmsg {
+  text-align: center;
+}
+
+#logmsgbtn{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.btnmarg {
+  margin-left: 1%;
+  margin-right: 1%; 
 }

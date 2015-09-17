@@ -1,6 +1,12 @@
 <div class = 'background'>
 </div>
-<h1><%= @message %></h1>
 
-<li><a href='/'><button class = "btn btn-primary">HOME</button></a></li>
-<li><a href='/users/dashboard'><button class = "btn btn-warning">DASHBOARD</button></a></li>
+<div class = "loginwrapper">
+<div class = 'well vertical-alignbig'>
+<h3 id = 'authmsg'><%= @message %></h3>
+<div id = 'logmsgbtn'>
+<a href='/'class = "btnmarg"><button class = "btn btn-success btnmarg">Login</button></a></li>
+<a href='/register' class = "btnmarg"><button class = "btn btn-info ">Register</button></a></li>
+</div>
+</div>
+</div>
