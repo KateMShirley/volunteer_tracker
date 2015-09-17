@@ -22,7 +22,7 @@ set :public_dir, File.expand_path('../../Public', __FILE__)
 ##########################Base Routing#################################
 
 get '/' do
-  erb :index
+  redirect '/users/login'
 
 end
 
@@ -31,19 +31,7 @@ end
 
 ##########################Starter Code from James for DB logic#######################
 
-# get '/somejunkstufftestyolo' do
-#
-#   @allthemodels = OppsModel.where({ user_id: 1 })
-#
-#   @total_hours = 0;
-#
-#   @allthemodels.each do |model|
-#     @total_hours = model.hours + @total_hours
-#   end
-#
-#   #<%= @total_hours %>
-#
-# end
+
 
 
 

@@ -1,0 +1,40 @@
+.background {
+  background-image: url('http://blog.kalaharimeetings.com/wp-content/uploads/2014/04/volunteer.jpg');
+  background-size: cover;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  height: 800px;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: -1;
+}
+
+.vertical-align {
+  margin-top: 10%;
+}
+
+.form-signin{
+  display: block;
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+.loginwrapper{
+  width: 60%;
+  display: block;
+  margin: 0 auto;
+}
+
+#login{
+  text-align: center;
+}
+
+#logbut {
+  display: block;
+  margin: 0 auto;
+}
+
+#reglink {
+  text-align: right;
+}

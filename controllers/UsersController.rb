@@ -84,7 +84,19 @@ class UsersController < ApplicationController
       elsif
         @current_user = session[:user]
       end
-        puts @current_user.id
+
+      @allthemodels = OppsModel.where({ user_id: @current_user.id })
+      @total_hours = 0;
+      @allthemodels.each do |model|
+      @total_hours = model.hours + @total_hours
+      end
+
+      @alltheorgs = OppsModel.where({ user_id: @current_user.id }).distinct.count(:org)
+      @allthecategs = OppsModel.where({ user_id: @current_user.id }).distinct.count(:category)
+
+      puts @alltheorgs
+      puts @allthecategs
+
         erb :dashboard
 
     end

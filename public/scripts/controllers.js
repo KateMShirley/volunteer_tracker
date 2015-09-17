@@ -12,10 +12,10 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppsFactory', '$location',
 
         };
 
-        // callback for ng-click 'editOpp':
-        $scope.editOpp = function (oppId) {
-            $location.path('/opp_edit/' + oppId);
-        };
+        // // callback for ng-click 'editOpp':
+        // $scope.editOpp = function (oppId) {
+        //     $location.path('/opp_edit/' + oppId);
+        // };
 
         // callback for ng-click 'deleteOpp':
         $scope.deleteOpp = function (oppId) {
@@ -26,9 +26,7 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppsFactory', '$location',
 
         // callback for ng-click 'createOpp':
         $scope.createNewOpp = function (opp) {
-            // OppsFactory.create($scope.opp);
-            // console.log('opp created');
-            // console.log ($scope.opp);
+
             $scope.opp['user_id'] = user.id;
             OppsFactory.save($scope.opp);
             $scope.fetch();
@@ -36,8 +34,12 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppsFactory', '$location',
 
         $scope.opps = OppsFactory.query();
         $scope.currentUser = user.id;
+        $scope.totalHours = total_hours;
+        $scope.all_orgs = all_orgs;
+        $scope.all_categs = all_categs;
         console.log($scope.currentUser)
         console.log($scope.opps)
+
     }]);
     /* ... */
     app.controller('OppsEditCtrl', ['$scope', '$routeParams', 'OppsFactory', '$location',
