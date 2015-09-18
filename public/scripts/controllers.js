@@ -8,7 +8,7 @@ app.controller('OppsCtrl', ['$scope', 'OppsFactory', 'OppsFactory', '$location',
 
           setTimeout(function() {
             $scope.opps = OppsFactory.query();
-          }, 1000);
+          }, 100);
 
         };
 

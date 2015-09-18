@@ -41,6 +41,7 @@ class UsersController < ApplicationController
     new_user.last_name = params[:last_name]
     new_user.username = params[:username]
     new_user.email = params[:email]
+    new_user.goal = params[:goal]
     new_user.password_hash = password_hash
     new_user.password_salt = password_salt
     new_user.save
@@ -63,7 +64,6 @@ class UsersController < ApplicationController
 
     pwd = params[:password]
     if @user.password_hash == BCrypt::Engine.hash_secret(pwd, @user.password_salt)
-      @message = 'Welcome Back! '
       session[:user] = @user
       redirect '/users/dashboard'
     else
