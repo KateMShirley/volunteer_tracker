@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @message = ''
 
     if does_user_exist?(params[:username]) == true
-      @message = 'Sorry, this username already exists. Please try a new one.'
+      @message = 'Sorry, this username already exists. Please try to register again with a different one.'
       return erb :login_notice
     end
 
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     new_user.password_salt = password_salt
     new_user.save
 
-    @message = 'You have successfully registered! Please login with your new username and password. '
+    @message = 'You have successfully registered! Please login with your new username and password to begin logging your hours. '
     return erb :login_notice
 
     end
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       session[:user] = @user
       redirect '/users/dashboard'
     else
-      @message = 'Password is incorrect. Please try again'
+      @message = 'Password is incorrect. Please try to login again.'
       return erb :login_notice
     end
   end
