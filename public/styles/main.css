@@ -109,3 +109,24 @@
     filter: blur(5px);
       -webkit-filter: blur(5px);
 }
+
+.alertwrapper {
+  width: 70%;
+  display: block;
+  margin: 0 auto;
+  border-width: thin;
+  border-radius: 10px;
+}
+
+#navhead {
+  text-align: center;
+  font-family: 'Arvo', serif !important;
+};
+
+.message {
+  color: black !important;
+}
+
+strong {
+  color: rgb(0, 41, 82)
+}

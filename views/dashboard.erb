@@ -23,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Do Good Dashboard</a>
+      <a class="navbar-brand navhead" href="/">Do Good Dashboard</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
@@ -40,8 +40,13 @@
 
 <div class = 'alert alert-info intro'>
 <h3  id='center'>Hello <%= @current_user[:first_name] %>! Welcome back to your Dashboard.</h3>
-<h5> You have completed  <%= @total_hours %> hours out of your goal of <%= @current_user[:goal] %> hours of service. Go you! </h5>
-<h6> You have worked with <%= @alltheorgs %> organizations while supporting <%= @allthecategs %> causes.
+<br>
+<div class = 'alertwrapper'>
+
+<h4 class ='message'><strong>GOAL MESSAGE:</strong> You have completed <strong> <%= @total_hours %></strong> hours out of your goal of <strong><%= @current_user[:goal] %></strong> hours of service.
+<br><strong>IMPACT MESSAGE:</strong> You have worked with <strong><%= @alltheorgs %></strong> organizations while supporting <strong><%= @allthecategs %></strong> causes.
+
+</div>
 <br>
 <br>
 <div id = 'logmsgbtn'>
@@ -51,16 +56,28 @@
   <p>You have helped at least 1 organization!</p>
   <% else %>
   <img src = "images/peace.png" class = "img-responsive icon grey" id = 'onegoal'>
+<p>Log more hours to win the next badge</p>
   <% end %>
 </div>
+<div class = "icon-block">
+<% if @total_hours >= 20 %>
+<img src = "/images/family26.png" class = "img-responsive icon">
+<p>You have volunteered over 20 hours!</p>
+<% else %>
+<img src = "/images/family26.png" class = "img-responsive icon grey" >
+<p>Log more hours to win the next badge</p>
+<% end %>
+</div>
   <div class = "icon-block">
-  <img src = "/images/circle39.png" class = "img-responsive icon grey">
+    <% if @total_hours >= @current_user[:goal] %>
+  <img src = "/images/circle39.png" class = "img-responsive icon">
   <p>You have reached your volunteering goal!</p>
+  <% else %>
+  <img src = "/images/circle39.png" class = "img-responsive icon grey">
+  <p>Log more hours to win the next badge</p>
+  <% end %>
  </div>
-  <div class = "icon-block">
-  <img src = "/images/family26.png" class = "img-responsive icon grey" >
-  <p>You have volunteered over 100 hours!</p>
- </div>
+
 
 
 </div>
@@ -68,8 +85,14 @@
 <div ng-app='volunteerTrack'>
   <div ng-controller ='OppsCtrl'>
   <div class="span6">
-
-    <button class="btn btn-primary logbut" type="button" data-toggle="collapse" data-target="#newForm" aria-expanded="false" aria-controls="collapseExample">
+    <% if @total_hours == 0 %>
+    <div class = 'alertwrapper'>
+    <div class="alert alert-success">
+    <p>Add opportunities to fill out your dashboard!</p>
+  </div>
+</div>
+    <% end %>
+    <button class="btn btn-warning logbut btn-lg" type="button" data-toggle="collapse" data-target="#newForm" aria-expanded="false" aria-controls="collapseExample">
       Add New
     </button>
 
@@ -149,6 +172,7 @@
           </tr>
           </thead>
           <tbody>
+
           <tr ng-repeat="opp in opps | filter:{user_id:currentUser}:true">
               <td>{{ opp.title }}</td>
               <td>{{ opp.org }}</td>
